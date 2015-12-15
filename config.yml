@@ -1,36 +1,63 @@
+# world imprisoned players respawn to once freed
 free_world: world
+# if set to false: sends pearled players to free world if freed when offline. if set to true: keeps players in end if freed when offline.
 free_respawn: true
+# if freed while online, will teleport to the player holding the pearl.
 free_tppearl: true
+# minimum amount of damage committed by a player to recieve a pearl.
 damagelog_min: 3
+# amount of ticks the damage logger will track damage before resetting.
 damagelog_ticks: 600
+# enable pearl holders to use /ppkill while a player is summoned to kill them if true.
 ppkill_enabled: true
+# enable another player to repearl a summoned player if true
 prison_stealing: true
+# requires players to have enderpearl in hotbar to pearl another killed player
 prison_musthotbar: true
+# the distance a summond player can travel by default from the pearlholder
 summon_damage_radius: 20
+# how many ticks until damage is dealt to pearled player outside summon_damage_radius
 summon_damage_ticks: 20
+# amount of damage dealt to prisoned player
 summon_damage_amt: 2
+# which world players are sent to when killed by another player with an enderpearl in their hotbar (or inventory depending on prison_hotbar setting)
 prison_world: world_the_end
+# resets a players bed spawn when they get pearled
 prison_resetbed: false
+# if an enderpearl is dropped, either by a player dropping the pearl, or disconnecting while holding a pearl in inventory, chunk_delay is the amount of ticks the prisonpearl will stay intact before despawning.
 chunk_delay: 1200
+# if true clears the inventory of a prisoned player when summoned to the free_world
 ppsummon_clear_inventory: false
+# if true, when pearled players are /ppreturned they die and respawn in the prison_World
 ppreturn_kills: false
+# the message that is displayed when players join the prison_world after being imprisoned
 prison_motd:
    - You are trapped in this bleak and endless world
    - by a prison pearl.
    - Type /pplocate to locate your pearl.
+# the amount of ticks to wait before saving
 save_ticks: 2400
+# this setting controls the 'pearl cost'. PrisonPearls require quantity amount of resource placed inside the chest the prisonpearl is located in to keep the player pearled.
 upkeep:
+# the Minecraft item ID of the resource required to keep players pearled.
   resource: 263
+# the amount of resource taken at each restart. If there aren't enough of the resource, the pearl is released
   quantity: 4
+# the max distance a pearl can be away from 0,0 before being freed. 
   distance: 0
+# this setting disables the prisonpearl from taking more resources if a prisoned player hasn't logged in for the specified amount of time
 ignore_feed:
   days: 0
   hours: 0
   seconds: 0
+# The amount of time to wait before feeding can occur again.
 feed_delay: 72000000
+# this setting will free prisonpearls stored in chests placed outside of worldborder.
 autofree_worldborder: true
+# worlds where prisonpearls cannot be carried. The prisonpearl will drop at the portal, or previous location, in previous world.
 deny_pearls_worlds:
   - world_nether
+# if mysql is set to false, PrisonPearl will use a flatfile.
 mysql:
   enabled: false
   dbname: PrisonPearl
