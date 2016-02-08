@@ -304,10 +304,12 @@ public class PrisonPearlMysqlStorage {
 	
 	public void updateSummonedPlayer(Summon summon){
 		try {
+			Location returnLocation = summon.getReturnLocation();
+			
 			updateSummonedPlayer.setString(1, summon.getReturnLocation().getWorld().getName());
-			updateSummonedPlayer.setInt(2, summon.getReturnLocation().getBlockX());
-			updateSummonedPlayer.setInt(3, summon.getReturnLocation().getBlockY());
-			updateSummonedPlayer.setInt(4, summon.getReturnLocation().getBlockZ());
+			updateSummonedPlayer.setInt(2, returnLocation.getBlockX());
+			updateSummonedPlayer.setInt(3, returnLocation.getBlockY());
+			updateSummonedPlayer.setInt(4, returnLocation.getBlockZ());
 			updateSummonedPlayer.setInt(5, summon.getAllowedDistance());
 			updateSummonedPlayer.setInt(6, summon.getDamageAmount());
 			updateSummonedPlayer.setBoolean(7, summon.isCanSpeak());
