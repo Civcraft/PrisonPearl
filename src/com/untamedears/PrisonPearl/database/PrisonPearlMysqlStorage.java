@@ -48,7 +48,7 @@ public class PrisonPearlMysqlStorage {
 
 	public void initializeTables() {
 		db.execute("create table if not exists PrisonPearls( "
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "world varchar(255) not null," 
 				+ "x int not null,"
 				+ "y int not null," 
@@ -57,10 +57,10 @@ public class PrisonPearlMysqlStorage {
 				+ "motd varchar(255) not null," 
 				+ "primary key ids_id(uuid));");
 		db.execute("create table if not exists PrisonPearlPortaled("
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "primary key uuid_key(uuid));");
 		db.execute("create table if not exists PrisonPearlSummon("
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "world varchar(255) not null,"
 				+ "x int not null,"
 				+ "y int not null,"
@@ -75,7 +75,7 @@ public class PrisonPearlMysqlStorage {
 				+ "lastRestart bigint not null default 0,"
 				+ "server varchar(255) not null);");
 		db.execute("create table if not exists ppWorldBorder("
-				+ "world varchar(36) not null,"
+				+ "world char(36) not null,"
 				+ "x int not null,"
 				+ "y int not null,"
 				+ "z int not null,"
@@ -132,11 +132,13 @@ public class PrisonPearlMysqlStorage {
 
 	public void addPearl(PrisonPearl pp) {
 		try {
+			Location ppLocation = pp.getLocation();
+
 			addPearl.setString(1, pp.getImprisonedId().toString());
-			addPearl.setString(2, pp.getLocation().getWorld().getName());
-			addPearl.setInt(3, pp.getLocation().getBlockX());
-			addPearl.setInt(4, pp.getLocation().getBlockY());
-			addPearl.setInt(5, pp.getLocation().getBlockZ());
+			addPearl.setString(2, ppLocation.getWorld().getName());
+			addPearl.setInt(3, ppLocation.getBlockX());
+			addPearl.setInt(4, ppLocation.getBlockY());
+			addPearl.setInt(5, ppLocation.getBlockZ());
 			addPearl.setInt(6, pp.getUniqueIdentifier());
 			addPearl.setString(7, pp.getMotd());
 			addPearl.execute();
@@ -270,11 +272,14 @@ public class PrisonPearlMysqlStorage {
 	
 	public void addSummonedPlayer(Summon summon){
 		try {
+
+			Location returnLocation = summon.getReturnLocation();
+
 			addSummonedPlayer.setString(1, summon.getSummonedId().toString());
-			addSummonedPlayer.setString(2, summon.getReturnLocation().getWorld().toString());
-			addSummonedPlayer.setInt(3, summon.getReturnLocation().getBlockX());
-			addSummonedPlayer.setInt(4, summon.getReturnLocation().getBlockY());
-			addSummonedPlayer.setInt(5, summon.getReturnLocation().getBlockZ());
+			addSummonedPlayer.setString(2, returnLocation.getWorld().toString());
+			addSummonedPlayer.setInt(3, returnLocation.getBlockX());
+			addSummonedPlayer.setInt(4, returnLocation.getBlockY());
+			addSummonedPlayer.setInt(5, returnLocation.getBlockZ());
 			addSummonedPlayer.setInt(6, summon.getAllowedDistance());
 			addSummonedPlayer.setInt(7, summon.getDamageAmount());
 			addSummonedPlayer.setBoolean(8, summon.isCanSpeak());
@@ -299,10 +304,12 @@ public class PrisonPearlMysqlStorage {
 	
 	public void updateSummonedPlayer(Summon summon){
 		try {
+			Location returnLocation = summon.getReturnLocation();
+			
 			updateSummonedPlayer.setString(1, summon.getReturnLocation().getWorld().getName());
-			updateSummonedPlayer.setInt(2, summon.getReturnLocation().getBlockX());
-			updateSummonedPlayer.setInt(3, summon.getReturnLocation().getBlockY());
-			updateSummonedPlayer.setInt(4, summon.getReturnLocation().getBlockZ());
+			updateSummonedPlayer.setInt(2, returnLocation.getBlockX());
+			updateSummonedPlayer.setInt(3, returnLocation.getBlockY());
+			updateSummonedPlayer.setInt(4, returnLocation.getBlockZ());
 			updateSummonedPlayer.setInt(5, summon.getAllowedDistance());
 			updateSummonedPlayer.setInt(6, summon.getDamageAmount());
 			updateSummonedPlayer.setBoolean(7, summon.isCanSpeak());
