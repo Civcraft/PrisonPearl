@@ -132,11 +132,13 @@ public class PrisonPearlMysqlStorage {
 
 	public void addPearl(PrisonPearl pp) {
 		try {
+			Location ppLocation = pp.getLocation();
+			
 			addPearl.setString(1, pp.getImprisonedId().toString());
-			addPearl.setString(2, pp.getLocation().getWorld().getName());
-			addPearl.setInt(3, pp.getLocation().getBlockX());
-			addPearl.setInt(4, pp.getLocation().getBlockY());
-			addPearl.setInt(5, pp.getLocation().getBlockZ());
+			addPearl.setString(2, ppLocation.getWorld().getName());
+			addPearl.setInt(3, ppLocation.getBlockX());
+			addPearl.setInt(4, ppLocation.getBlockY());
+			addPearl.setInt(5, ppLocation.getBlockZ());
 			addPearl.setInt(6, pp.getUniqueIdentifier());
 			addPearl.setString(7, pp.getMotd());
 			addPearl.execute();
