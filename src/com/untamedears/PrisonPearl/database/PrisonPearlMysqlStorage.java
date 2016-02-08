@@ -133,7 +133,7 @@ public class PrisonPearlMysqlStorage {
 	public void addPearl(PrisonPearl pp) {
 		try {
 			Location ppLocation = pp.getLocation();
-			
+
 			addPearl.setString(1, pp.getImprisonedId().toString());
 			addPearl.setString(2, ppLocation.getWorld().getName());
 			addPearl.setInt(3, ppLocation.getBlockX());
@@ -272,11 +272,14 @@ public class PrisonPearlMysqlStorage {
 	
 	public void addSummonedPlayer(Summon summon){
 		try {
+
+			Location returnLocation = summon.getReturnLocation();
+
 			addSummonedPlayer.setString(1, summon.getSummonedId().toString());
-			addSummonedPlayer.setString(2, summon.getReturnLocation().getWorld().toString());
-			addSummonedPlayer.setInt(3, summon.getReturnLocation().getBlockX());
-			addSummonedPlayer.setInt(4, summon.getReturnLocation().getBlockY());
-			addSummonedPlayer.setInt(5, summon.getReturnLocation().getBlockZ());
+			addSummonedPlayer.setString(2, returnLocation.getWorld().toString());
+			addSummonedPlayer.setInt(3, returnLocation.getBlockX());
+			addSummonedPlayer.setInt(4, returnLocation.getBlockY());
+			addSummonedPlayer.setInt(5, returnLocation.getBlockZ());
 			addSummonedPlayer.setInt(6, summon.getAllowedDistance());
 			addSummonedPlayer.setInt(7, summon.getDamageAmount());
 			addSummonedPlayer.setBoolean(8, summon.isCanSpeak());
