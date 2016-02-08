@@ -48,7 +48,7 @@ public class PrisonPearlMysqlStorage {
 
 	public void initializeTables() {
 		db.execute("create table if not exists PrisonPearls( "
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "world varchar(255) not null," 
 				+ "x int not null,"
 				+ "y int not null," 
@@ -57,10 +57,10 @@ public class PrisonPearlMysqlStorage {
 				+ "motd varchar(255) not null," 
 				+ "primary key ids_id(uuid));");
 		db.execute("create table if not exists PrisonPearlPortaled("
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "primary key uuid_key(uuid));");
 		db.execute("create table if not exists PrisonPearlSummon("
-				+ "uuid varchar(36) not null,"
+				+ "uuid char(36) not null,"
 				+ "world varchar(255) not null,"
 				+ "x int not null,"
 				+ "y int not null,"
@@ -75,7 +75,7 @@ public class PrisonPearlMysqlStorage {
 				+ "lastRestart bigint not null default 0,"
 				+ "server varchar(255) not null);");
 		db.execute("create table if not exists ppWorldBorder("
-				+ "world varchar(36) not null,"
+				+ "world char(36) not null,"
 				+ "x int not null,"
 				+ "y int not null,"
 				+ "z int not null,"
