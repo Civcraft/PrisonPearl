@@ -166,6 +166,7 @@ public class PrisonPearlManager {
 		lore.add("Unique: " + pp.getUniqueIdentifier());
 		// Given enchantment effect (durability used because it doesn't affect pearl behaviour)
 		im.addEnchant(Enchantment.DURABILITY, 1, true);
+		im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		im.setLore(lore);
 		is.setItemMeta(im);
 		// Give it to the imprisoner
