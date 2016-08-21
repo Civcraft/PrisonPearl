@@ -241,22 +241,24 @@ public class PlayerListener implements Listener {
 		Location loc = imprisoner.getLocation();
 		World world = imprisoner.getWorld();
 		Inventory inv = imprisoner.getInventory();
-		if (combatManager.isCombatTagged(imprisoner) || 
-				(PrisonPearlPlugin.isBetterShardsEnabled() && BetterShardsPlugin.getTransitManager()
-						.isPlayerInExitTransit(imprisoner.getUniqueId()))) { 
+		if (PrisonPearlPlugin.isBetterShardsEnabled() && BetterShardsPlugin.getTransitManager()
+						.isPlayerInExitTransit(imprisoner.getUniqueId())) {
 			// if player is tagged or if player is transfered to another server.
 			for (Entry<Integer, ? extends ItemStack> entry :
 				inv.all(Material.ENDER_PEARL).entrySet()) {
-			ItemStack item = entry.getValue();
-			PrisonPearl pp = pearls.getPearlByItemStack(item);
-			if (pp == null) {
-				continue;
-			}
-			pp.setHolder(new FakeLocation(loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(),
+				ItemStack item = entry.getValue();
+				PrisonPearl pp = pearls.getPearlByItemStack(item);
+				if (pp == null) {
+					continue;
+				}
+				pp.setHolder(new FakeLocation(loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(),
 					MercuryAPI.serverName(), imprisoner.getName()));
-		}
+				}
+			return;
+		} else if (combatManager.isCombatTagged(imprisoner)) {
 			return;
 		}
+		
 		for (Entry<Integer, ? extends ItemStack> entry :
 				inv.all(Material.ENDER_PEARL).entrySet()) {
 			ItemStack item = entry.getValue();
@@ -285,7 +287,6 @@ public class PlayerListener implements Listener {
 			if (pp == null)
 				continue;
 			
-			final Player player = Bukkit.getPlayer(pp.getImprisonedId());
 			final Entity entity = e;
 			final World world = entity.getWorld();
 			final int chunkX = event.getChunk().getX();

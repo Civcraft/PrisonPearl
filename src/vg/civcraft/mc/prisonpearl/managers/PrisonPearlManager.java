@@ -697,10 +697,14 @@ public class PrisonPearlManager {
     		if (stack != null)
     			break;
     	}
-    	if (stack == null)
+    	if (stack == null) {
     		for (Inventory i: inv) {
-            	if (stack != null)
+            	if (stack != null) {
         			break;
+            	}
+            	if (i == null) {
+            		continue;
+            	}
         		for (int x = 0; x < i.getSize(); x++) {
         			ItemStack current = i.getItem(x);
         			if (current == null) {
@@ -715,6 +719,7 @@ public class PrisonPearlManager {
         			}
         		}
     		}
+    	}
 	}
 	
 	private ItemStack generatePearlItem(PrisonPearl pp) {
