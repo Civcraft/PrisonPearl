@@ -58,10 +58,6 @@ public class BetterShardsListener implements Listener{
 		UUID uuid = event.getUUID();
 		if (!summons.isSummoned(uuid))
 			return;
-		Summon s = summons.getSummon(uuid);
-		if (!s.isToBeReturned())
-			return;
-		s.setToBeReturned(false);
 		PrisonPearl pp = pearls.getByImprisoned(uuid);
 		Player p = pp.getHolderPlayer();
 		p.sendMessage(ChatColor.RED + "There was an issue returning the player. Please "
@@ -73,10 +69,6 @@ public class BetterShardsListener implements Listener{
 		UUID uuid = event.getUUID();
 		if (!summons.isSummoned(uuid))
 			return;
-		Summon s = summons.getSummon(uuid);
-		if (!s.isToBeReturned())
-			return;
-		s.setToBeReturned(false);
 		PrisonPearl pp = pearls.getByImprisoned(uuid);
 		summons.removeSummon(pp);
 		MercuryManager.returnPPSummon(uuid);

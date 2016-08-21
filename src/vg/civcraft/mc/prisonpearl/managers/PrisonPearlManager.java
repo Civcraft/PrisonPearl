@@ -37,7 +37,9 @@ import org.bukkit.permissions.PermissionAttachment;
 
 import vg.civcraft.mc.bettershards.BetterShardsAPI;
 import vg.civcraft.mc.bettershards.BetterShardsPlugin;
+import vg.civcraft.mc.bettershards.events.PlayerChangeServerReason;
 import vg.civcraft.mc.bettershards.misc.BedLocation;
+import vg.civcraft.mc.bettershards.misc.PlayerStillDeadException;
 import vg.civcraft.mc.bettershards.misc.TeleportInfo;
 import vg.civcraft.mc.civmodcore.annotations.CivConfig;
 import vg.civcraft.mc.civmodcore.annotations.CivConfigType;
@@ -255,7 +257,7 @@ public class PrisonPearlManager {
 		if (player != null) {
 			Location currentLoc = player.getLocation();
 			if (!player.isDead() && currentLoc.getWorld() == getImprisonWorld()) {
-				respawnPlayerCorrectly(player, pp, null);
+				Location loc = pp.getLocation();
 			}
 			
 		}
@@ -423,7 +425,15 @@ public class PrisonPearlManager {
 	public void freePearlFromMercury(PrisonPearl pp, String reason, String server) {
 		storage.removePearl(pp, reason);
 		if (server != null && pp.getImprisonedPlayer() != null) {
-			respawnPlayerCorrectly(pp.getImprisonedPlayer(), pp, null);
+			FakeLocation loc = (FakeLocation) pp.getLocation();
+			TeleportInfo info = new TeleportInfo(loc.getWorldName(), server, loc.getBlockX(), loc.getBlockY()+1, loc.getBlockZ());
+			BetterShardsAPI.teleportPlayer(loc.getServerName(), pp.getImprisonedId(), info);
+			try {
+				BetterShardsAPI.connectPlayer(pp.getHolderPlayer(), server, PlayerChangeServerReason.PLUGIN);
+			} catch (PlayerStillDeadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

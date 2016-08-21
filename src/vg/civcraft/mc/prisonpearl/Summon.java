@@ -18,8 +18,6 @@ public class Summon {
 	private boolean canBreak = true;
 	private int distance; // Nice little default.
 	private int amountDamage; // Amount to damage the player per cycle.
-	private boolean toBeReturned = false; // This is mainly so PlayerRespawn method knows if it is trying to respawn the player.
-	private boolean justCreated = false; // This is mainly so PlayerRespawn method knows if it is trying to be sent to summoned player.
 	private long lastSummoned; // The last time the player was summoned or returned.
 	
 	public Summon(final UUID uuid, Location returnLoc, PrisonPearl prison) {
@@ -110,22 +108,6 @@ public class Summon {
 	
 	public int getAmountDamage() {
 		return amountDamage;
-	}
-	
-	public void setToBeReturned(boolean toBeReturned) {
-		this.toBeReturned = toBeReturned;
-	}
-	
-	public boolean isToBeReturned() {
-		return toBeReturned;
-	}
-	
-	public void setJustCreated(boolean justCreated) {
-		this.justCreated = justCreated;
-	}
-	
-	public boolean isJustCreated() {
-		return justCreated;
 	}
 	
 	public void setTime(long time) {

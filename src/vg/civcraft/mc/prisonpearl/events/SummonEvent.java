@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 
 public class SummonEvent extends Event {
-	public enum Type { SUMMONED, RETURNED, KILLED, DIED }
+	public enum Type { SUMMONED, RETURNED, DIED }
 
     private final PrisonPearl pp;
 	private final Type type;
@@ -34,6 +34,10 @@ public class SummonEvent extends Event {
 		return type;
 	}
 	
+	/**
+	 * This can be null if the player is returning from another server.
+	 * @return
+	 */
 	public Location getLocation() {
 		return location;
 	}

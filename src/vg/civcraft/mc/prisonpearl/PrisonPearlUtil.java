@@ -1,6 +1,5 @@
 package vg.civcraft.mc.prisonpearl;
 
-import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import org.bukkit.Bukkit;
@@ -8,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,94 +24,6 @@ public class PrisonPearlUtil {
 		manager = PrisonPearlPlugin.getPrisonPearlManager();
 		summon = PrisonPearlPlugin.getSummonManager();
 		mainThread = Thread.currentThread();
-		
-		if (PrisonPearlPlugin.isBetterShardsEnabled() && PrisonPearlPlugin.isMercuryEnabled()) {
-			new PrisonPearlUtilShards();
-		}
-	}
-	
-	public static boolean respawnPlayerCorrectly(Player p) {
-		return respawnPlayerCorrectly(p, null, null);
-	}
-	
-	public static boolean respawnPlayerCorrectly(Player p, PlayerRespawnEvent event) {
-		return respawnPlayerCorrectly(p, null, event);
-	}
-	
-	/**
-	 * 
-	 * @param p
-	 * @param pp
-	 * @param passPearl Will mainly just deal if a player was just freed.
-	 * @return Return false if the player was not tpped in anyway.
-	 */
-	public static boolean respawnPlayerCorrectly(Player p, PrisonPearl passPearl, PlayerRespawnEvent event) { 
-		// We want this method to deal with all cases: Respawn on death, Respawn on summoning, returning,
-		// different shards transport, everything. 
-		
-		UUID uuid = p.getUniqueId();
-		boolean freeToPearl = PrisonPearlConfig.shouldTpPearlOnFree();
-		PrisonPearl pp = manager.getByImprisoned(uuid);
-		if (PrisonPearlPlugin.isBetterShardsEnabled() && PrisonPearlPlugin.isMercuryEnabled()) {
-			PrisonPearlPlugin.doDebug("Respawning player {0} for BetterShards", uuid);
-			return PrisonPearlUtilShards.respawnPlayerCorrectlyShards(p, passPearl, event);
-		} else if (manager.isImprisoned(uuid)) {
-			// This part will deal for when bettershards and mercury are not enabled.
-			// This still needs work on, should get reports from non mercury/ BetterShards Servers and they should say whats wrong.
-			if (summon.isSummoned(p)) {
-				Summon s = summon.getSummon(p);
-				if (s.isToBeReturned()) {
-					PrisonPearlPlugin.doDebug("Player {0} was summoned and is being returned", uuid);
-					if (PrisonPearlConfig.getShouldPPReturnKill()) {
-						p.setHealth(0);
-					}
-					Location newLoc = s.getReturnLocation();
-					newLoc.setY(newLoc.getY() + 1);
-					if (event != null)
-						event.setRespawnLocation(newLoc);
-					else
-						p.teleport(newLoc);
-				} else if (s.isJustCreated()) {
-					PrisonPearlPlugin.doDebug("Player {0} was just summoned!", uuid);
-					if (PrisonPearlConfig.shouldPpsummonClearInventory()) {
-						dropInventory(p, p.getLocation(), PrisonPearlConfig.shouldPpsummonLeavePearls());
-					}
-					p.teleport(s.getPearlLocation());
-				} else {
-					PrisonPearlPlugin.doDebug("Player {0} is summoned, but nothing to do", uuid);
-				}
-			} else if (!p.getWorld().equals(manager.getPrisonSpawnLocation().getWorld())) {
-				PrisonPearlPlugin.doDebug("Player {0} is imprisoned; respawning back into the prison world", uuid);
-				if (event != null)
-					event.setRespawnLocation(manager.getPrisonSpawnLocation());
-				else
-					p.teleport(manager.getPrisonSpawnLocation());
-			} else {
-				PrisonPearlPlugin.doDebug("Respawning player {0} based on is-imprisoned catchall condition", uuid);
-				Location newLoc = manager.getPrisonSpawnLocation();
-				if (event != null)
-					event.setRespawnLocation(newLoc);
-				else
-					p.teleport(newLoc);
-			}
-			return true;
-		} else if (passPearl != null && freeToPearl) {
-			// pp is null b/c manager has already removed it due to /ppfree or throwing the pearl.
-			// so use passPearl instead to free the player.
-			PrisonPearlPlugin.doDebug("Player {0} was freed; teleporting to pearl-toss free location", uuid);
-			if (passPearl.getLocation().getY() < 1.0) {
-				p.teleport(passPearl.getLocation().add(0,1.0,0));
-			} else {
-				p.teleport(passPearl.getLocation());
-			}
-			return true;
-		} else if (passPearl == null && pp != null) {
-			PrisonPearlPlugin.doDebug("Player {0} is pearled and not freed, send them back to prison", uuid);
-			p.teleport(manager.getPrisonSpawnLocation());
-		} else {
-			PrisonPearlPlugin.doDebug("Player {0} hit up for respawn but no dice -- {1}, {2}", uuid, pp, passPearl);
-		}
-		return false;
 	}
 	
 	 /**
