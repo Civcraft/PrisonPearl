@@ -429,7 +429,7 @@ public class PrisonPearlManager {
 			TeleportInfo info = new TeleportInfo(loc.getWorldName(), server, loc.getBlockX(), loc.getBlockY()+1, loc.getBlockZ());
 			BetterShardsAPI.teleportPlayer(loc.getServerName(), pp.getImprisonedId(), info);
 			try {
-				BetterShardsAPI.connectPlayer(pp.getHolderPlayer(), server, PlayerChangeServerReason.PLUGIN);
+				BetterShardsAPI.connectPlayer(pp.getImprisonedPlayer(), server, PlayerChangeServerReason.PLUGIN);
 			} catch (PlayerStillDeadException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

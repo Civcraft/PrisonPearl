@@ -64,6 +64,7 @@ public class PrisonPortaledPlayerListener implements Listener{
 		}
 		
 		if (!pearls.isImprisoned(p) && manager.isPlayerPortaledToPrison(p)) {
+			p.sendMessage("While away, you were freed!");
 			p.setHealth(0.0); // Need to kill the player;
 			manager.removePlayerPortaled(p.getUniqueId());
 			return;

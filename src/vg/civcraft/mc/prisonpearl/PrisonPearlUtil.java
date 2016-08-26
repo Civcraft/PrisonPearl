@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,6 +25,25 @@ public class PrisonPearlUtil {
 		manager = PrisonPearlPlugin.getPrisonPearlManager();
 		summon = PrisonPearlPlugin.getSummonManager();
 		mainThread = Thread.currentThread();
+	}
+	
+	public static void playerRespawnEventSpawn(Player player, PlayerRespawnEvent event) {
+		PrisonPearlManager pearls = PrisonPearlPlugin.getPrisonPearlManager();
+		PrisonPearlPlugin.doDebug("The player {0} is now teleporting to world {1}", 
+				player.getName(), pearls.getImprisonWorldName());
+		event.setRespawnLocation(pearls.getImprisonWorld().getSpawnLocation());
+	}
+	
+	public static void playerJoinEventSpawn(Player player) {
+		PrisonPearlManager pearls = PrisonPearlPlugin.getPrisonPearlManager();
+		if (!player.getLocation().getWorld().equals(pearls.getImprisonWorld())) {
+			PrisonPearlPlugin.doDebug("The player {0} was in the wrong world, now teleporting to world {1}", 
+					player.getName(), pearls.getImprisonWorldName());
+			player.teleport(pearls.getImprisonWorld().getSpawnLocation());
+		}
+		else {
+			prisonMotd(player);
+		}
 	}
 	
 	 /**
@@ -90,4 +110,14 @@ public class PrisonPearlUtil {
     public static boolean isMainThread(Thread t) {
     	return t.equals(mainThread);
     }
+    
+    // called when a player joins or spawns
+ 	public static void prisonMotd(Player player) {
+ 		PrisonPearlManager pearls = PrisonPearlPlugin.getPrisonPearlManager();
+ 		if (pearls.isImprisoned(player) && !summon.isSummoned(player)) {
+ 			for (String line : PrisonPearlConfig.getPrisonMotd())
+ 				player.sendMessage(line);
+ 			player.sendMessage(pearls.getByImprisoned(player).getMotd());
+ 		}
+ 	}
 }
