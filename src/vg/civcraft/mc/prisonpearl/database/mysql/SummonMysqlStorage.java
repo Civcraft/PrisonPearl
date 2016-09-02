@@ -124,50 +124,7 @@ public class SummonMysqlStorage implements ISummonStorage{
 
 	@Override
 	public Summon getSummon(UUID uuid) {
-		Summon summon = summons.get(uuid);
-		if (summon == null) {
-			handle.refreshAndReconnect();
-			PreparedStatement getSummon = db.prepareStatement(this.getSummon);
-			try {
-				getSummon.setString(1, uuid.toString());
-				ResultSet set = getSummon.executeQuery();
-				if (!set.next())
-					return null;
-				UUID worldUUID = UUID.fromString(set.getString("world"));
-				World w = Bukkit.getWorld(worldUUID);
-				Location loc = null;
-				int x = set.getInt("x");
-				int y = set.getInt("y");
-				int z = set.getInt("z");
-				if (w == null)
-					loc = new FakeLocation(worldUUID.toString(), x, y, z, PrisonPearlConfig.getImprisonServerName());
-				else 
-					loc = new Location(w, x, y, z);
-				int dist = set.getInt("dist");
-				int damage = set.getInt("damage");
-				boolean canSpeak = set.getBoolean("canSpeak");
-				boolean canDamage = set.getBoolean("canDamage");
-				boolean canBreak = set.getBoolean("canBreak");
-				summon = new Summon(uuid, loc, PrisonPearlPlugin.getPrisonPearlManager().getByImprisoned(uuid));
-				summon.setMaxDistance(dist);
-				summon.setAmountDamage(damage);
-				summon.setCanSpeak(canSpeak);
-				summon.setCanDamage(canDamage);
-				summon.setCanBreak(canBreak);
-				summons.put(uuid, summon);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				try {
-					getSummon.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		return summon;
+		return summons.get(uuid);
 	}
 
 	@Override

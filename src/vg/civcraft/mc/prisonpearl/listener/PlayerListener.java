@@ -374,6 +374,7 @@ public class PlayerListener implements Listener {
 			}
 		}
 	}
+	
 	// Prevent imprisoned players from placing PrisonPearls in their inventory.
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
 	public void onPrisonPearlClick(InventoryClickEvent event) {
@@ -419,7 +420,7 @@ public class PlayerListener implements Listener {
 				
 				InventoryHolder holder = clickedTop ? event.getView().getTopInventory().getHolder() : event.getView().getBottomInventory().getHolder();
 				if (holder==null){
-					Player player=pearl.getHolderPlayer();
+					pearl.getHolderPlayer();
 					pearl.markMove();
 					// Ender Expansion isn't currently being used anyways.  Not sure if this method will work.
 					//ee.updateEnderStoragePrison(pearl, event, player.getTargetBlock(new HashSet<Material>(), 5).getLocation());
@@ -448,7 +449,7 @@ public class PlayerListener implements Listener {
 				
 				InventoryHolder holder = !clickedTop ? event.getView().getTopInventory().getHolder() : event.getView().getBottomInventory().getHolder();
 				if (holder==null){
-					Player player=pearl.getHolderPlayer();
+					pearl.getHolderPlayer();
 					pearl.markMove();
 					//ee.updateEnderStoragePrison(pearl, event, player.getTargetBlock(new HashSet<Material>(), 5).getLocation());
 				}

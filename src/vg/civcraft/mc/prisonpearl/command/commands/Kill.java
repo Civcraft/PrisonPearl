@@ -46,7 +46,7 @@ public class Kill extends PlayerCommand {
 					+ "The player held in this pearl is not online");
 			return true;
 		}
-		imprisoned.damage(1000000.0); // should be enough
+		imprisoned.setHealth(0.0); // Let's kill the player.
 		imprisoned.sendMessage(ChatColor.YELLOW
 				+ "You were struck down by your imprisoner");
 		p.sendMessage(ChatColor.GREEN + "You killed "

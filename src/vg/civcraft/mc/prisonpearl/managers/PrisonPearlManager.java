@@ -257,7 +257,10 @@ public class PrisonPearlManager {
 		if (player != null) {
 			Location currentLoc = player.getLocation();
 			if (!player.isDead() && currentLoc.getWorld() == getImprisonWorld()) {
+				// Here we want to teleport the player to where the pearl is.
 				Location loc = pp.getLocation();
+				loc.setY(loc.getY() + 1); // So they don't fall through the floor.
+				player.teleport(loc);
 			}
 			
 		}
@@ -426,7 +429,9 @@ public class PrisonPearlManager {
 		storage.removePearl(pp, reason);
 		if (server != null && pp.getImprisonedPlayer() != null) {
 			FakeLocation loc = (FakeLocation) pp.getLocation();
-			TeleportInfo info = new TeleportInfo(loc.getWorldName(), server, loc.getBlockX(), loc.getBlockY()+1, loc.getBlockZ());
+			// Raise pearl by 1 block.
+			TeleportInfo info = new TeleportInfo(loc.getWorldName(), server, loc.getBlockX(),
+					loc.getBlockY()+1, loc.getBlockZ());
 			BetterShardsAPI.teleportPlayer(loc.getServerName(), pp.getImprisonedId(), info);
 			try {
 				BetterShardsAPI.connectPlayer(pp.getImprisonedPlayer(), server, PlayerChangeServerReason.PLUGIN);
