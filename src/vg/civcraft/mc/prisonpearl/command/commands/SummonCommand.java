@@ -33,11 +33,7 @@ public class SummonCommand extends PlayerCommand{
 			sender.sendMessage("You must be a player to execute this command.");
 			return true;
 		}
-		sender.sendMessage(ChatColor.RED + "This command is currently disabled");
-		//so it doesnt fail to compile because of dead code?
-		if (1 == 1) {
-		    return true;
-		}
+		
 		Player p = (Player) sender;
 		PrisonPearl pearl = pearls.getPearlByItemStack(p.getInventory().getItemInMainHand());
 		if (pearl == null) {

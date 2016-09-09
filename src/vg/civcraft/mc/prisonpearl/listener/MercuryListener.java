@@ -195,7 +195,6 @@ public class MercuryListener implements Listener{
 			p = pp.getHolderPlayer();
 			if (p != null)
 				p.sendMessage(ChatColor.RED + message[3]);
-			sm.returnPlayer(pp);
 		}
 		else if (reason.equals("accept")) {
 			PrisonPearl pp = pearls.getByImprisoned(uuid);
@@ -209,6 +208,45 @@ public class MercuryListener implements Listener{
 			Player holder = pp.getHolderPlayer();
 			if (holder != null)
 				holder.sendMessage(ChatColor.GREEN + "The player has been summoned.");
+		}
+		else if (reason.equals("update")) {
+			String type = message[3];
+			if (type.equals("damage")) {
+				int damage = Integer.parseInt(message[4]);
+				Summon s = sm.getSummon(uuid);
+				if (s == null) { // Summon player does not exist.
+					return;
+				}
+				s.setAmountDamage(damage);
+			}
+			else if (type.equals("distance")) {
+				int distance = Integer.parseInt(message[4]);
+				Summon s = sm.getSummon(uuid);
+				if (s == null) { // Summon player does not exist.
+					return;
+				}
+				s.setMaxDistance(distance);
+			}
+			else if (type.equals("toggle")) {
+				String sub = message[4];
+				Summon s = sm.getSummon(uuid);
+				if (s == null) { // Summon player does not exist.
+					return;
+				}
+				
+				boolean value = Boolean.getBoolean(message[5]);
+				switch(sub) {
+				case "blocks":
+					s.setCanBreak(value);
+					break;
+				case "damage":
+					s.setCanDamage(value);
+					break;
+				case "speech":
+					s.setCanSpeak(value);
+					break;
+				}
+			}
 		}
 	}
 	

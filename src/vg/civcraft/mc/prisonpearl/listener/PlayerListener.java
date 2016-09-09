@@ -290,7 +290,6 @@ public class PlayerListener implements Listener {
 			inv.clear(slot);
 			world.dropItemNaturally(loc, item);
 		}
-		imprisoner.saveData();
 	}
 	
 	private Map<UUID, BukkitTask> unloadedPearls = new HashMap<UUID, BukkitTask>();
@@ -449,8 +448,9 @@ public class PlayerListener implements Listener {
 				
 				InventoryHolder holder = !clickedTop ? event.getView().getTopInventory().getHolder() : event.getView().getBottomInventory().getHolder();
 				if (holder==null){
-					pearl.getHolderPlayer();
-					pearl.markMove();
+					// All legacy code from ender expansion.
+					//pearl.getHolderPlayer();
+					//pearl.markMove();
 					//ee.updateEnderStoragePrison(pearl, event, player.getTargetBlock(new HashSet<Material>(), 5).getLocation());
 				}
 				else if(holder.getInventory().firstEmpty() >= 0) {

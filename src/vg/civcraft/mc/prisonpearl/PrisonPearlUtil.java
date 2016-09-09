@@ -11,6 +11,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import vg.civcraft.mc.prisonpearl.events.SummonEvent;
+import vg.civcraft.mc.prisonpearl.events.SummonEvent.Type;
 import vg.civcraft.mc.prisonpearl.managers.PrisonPearlManager;
 import vg.civcraft.mc.prisonpearl.managers.SummonManager;
 
@@ -119,5 +121,54 @@ public class PrisonPearlUtil {
  				player.sendMessage(line);
  			player.sendMessage(pearls.getByImprisoned(player).getMotd());
  		}
+ 	}
+ 	
+ 	public static boolean handleSummonedPlayerReturn(PrisonPearl pearl, PlayerRespawnEvent event) {
+ 		final Player pearled = pearl.getImprisonedPlayer();
+		Summon s = PrisonPearlPlugin.getSummonManager().getSummon(pearled);
+		Type t = null;
+		if (event == null) {
+			t = Type.RETURNED;
+		} else {
+			// Since there is a PlayerRespawnEvent we know that the player died and is being 
+			// returned that way.
+			t = Type.DIED;
+		}
+ 		SummonEvent summonEvent = new SummonEvent(pearl, t);
+		Bukkit.getPluginManager().callEvent(summonEvent);
+		// Player is being returned same server.
+		// Let's check if the player is online.
+		if (pearled == null) {
+			// They are not so lets just remove the summon.
+			PrisonPearlPlugin.getSummonManager().removeSummon(pearl);
+		} else {
+			// They are.
+			if (event != null) {
+				event.setRespawnLocation(s.getReturnLocation());
+			} else {
+				pearled.teleport(s.getReturnLocation());
+			}
+		}
+		return true;
+ 	}
+ 	
+ 	public static boolean handleSummonedPlayerSummon(PrisonPearl pearl) {
+ 		final Player pearled = pearl.getImprisonedPlayer();
+ 		if (pearled != null) {
+			Summon s = new Summon(pearl.getImprisonedId(), pearled.getLocation(), pearl);
+			PrisonPearlPlugin.getSummonManager().addSummonPlayer(s);
+			// Here we know the player is on the same server going to the same server. Since
+			// Mercury is not enabled.
+			// Fucking turtles right.
+			SummonEvent event = new SummonEvent(pearl, Type.SUMMONED, pearled.getLocation());
+			Bukkit.getPluginManager().callEvent(event);
+			if (PrisonPearlConfig.shouldPpsummonClearInventory()) {
+				PrisonPearlUtil.dropInventory(pearled, pearled.getLocation(), PrisonPearlConfig.shouldPpsummonLeavePearls());
+			}
+			pearled.teleport(s.getPearlLocation());
+			PrisonPearlPlugin.doDebug("Player {0} was just summoned!", pearled.getUniqueId());
+			return true;
+		}
+		return false;
  	}
 }

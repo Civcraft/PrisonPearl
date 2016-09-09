@@ -66,13 +66,6 @@ public class BetterShardsListener implements Listener{
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void playerEnsuredToTransit(PlayerEnsuredToTransitEvent event) {
-		UUID uuid = event.getUUID();
-		if (!summons.isSummoned(uuid))
-			return;
-		PrisonPearl pp = pearls.getByImprisoned(uuid);
-		summons.removeSummon(pp);
-		MercuryManager.returnPPSummon(uuid);
-		Player p = pp.getHolderPlayer();
-		p.sendMessage(ChatColor.GREEN + "The player was successfully returned.");
+		
 	}
 }

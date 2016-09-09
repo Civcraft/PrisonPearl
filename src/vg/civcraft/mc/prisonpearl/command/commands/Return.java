@@ -34,11 +34,7 @@ public class Return extends PlayerCommand{
 			sender.sendMessage("You must be a player to execute this very fine command.");
 			return true;
 		}
-		sender.sendMessage(ChatColor.RED + "This command is currently disabled");
-		//so it doesnt fail to compile because of dead code?
-		if (1 == 1) {
-		    return true;
-		}
+		
 		Player p = (Player) sender;
 		ItemStack stack = p.getInventory().getItemInMainHand();
 		PrisonPearl pearl = pearls.getPearlByItemStack(stack);
@@ -70,7 +66,7 @@ public class Return extends PlayerCommand{
 			// methods as they will provide the next stage of code.
 			return true;
 		}
-		p.sendMessage(ChatColor.GREEN + "You have successfully returned the player.");
+		p.sendMessage(ChatColor.GREEN + "Player has been successfully returned.");
 		return true;
 	}
 

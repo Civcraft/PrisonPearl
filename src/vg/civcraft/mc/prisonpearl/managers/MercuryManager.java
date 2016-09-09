@@ -12,6 +12,7 @@ import vg.civcraft.mc.mercury.MercuryAPI;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 import vg.civcraft.mc.prisonpearl.PrisonPearlConfig;
 import vg.civcraft.mc.prisonpearl.PrisonPearlPlugin;
+import vg.civcraft.mc.prisonpearl.Summon;
 import vg.civcraft.mc.prisonpearl.database.interfaces.IPrisonPearlStorage;
 import vg.civcraft.mc.prisonpearl.events.PrisonPearlEvent;
 import vg.civcraft.mc.prisonpearl.misc.FakeLocation;
@@ -188,6 +189,41 @@ public class MercuryManager {
 		Location loc = pp.getLocation();
 		String message = String.format("locate|send|%s|%s|%d|%d|%d|%s", pp.getImprisonedId().toString(), loc.getWorld().getName(),
 				loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), pp.getHolderName());
+		MercuryAPI.sendGlobalMessage(message, channel);
+	}
+	
+	public static void updateSummonDamage(Summon s) {
+		if (!isMercuryEnabled)
+			return;
+		String message = String.format("summon|update|%s|damage|%d", s.getAmountDamage());
+		MercuryAPI.sendGlobalMessage(message, channel);
+	}
+	
+	public static void updateSummonDistance(Summon s) {
+		if (!isMercuryEnabled)
+			return;
+		String message = String.format("summon|update|%s|distance|%d", s.getMaxDistance());
+		MercuryAPI.sendGlobalMessage(message, channel);
+	}
+	
+	public static void updateSummonToggleBlocks(Summon s) {
+		if (!isMercuryEnabled)
+			return;
+		String message = String.format("summon|update|%s|toggle|blocks|%b", s.getCanBreak());
+		MercuryAPI.sendGlobalMessage(message, channel);
+	}
+	
+	public static void updateSummonToggleDamage(Summon s) {
+		if (!isMercuryEnabled)
+			return;
+		String message = String.format("summon|update|%s|toggle|damage|%b", s.getCanDamage());
+		MercuryAPI.sendGlobalMessage(message, channel);
+	}
+	
+	public static void updateSummonToggleSpeech(Summon s) {
+		if (!isMercuryEnabled)
+			return;
+		String message = String.format("summon|update|%s|toggle|speech|%b", s.getCanSpeak());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 }
