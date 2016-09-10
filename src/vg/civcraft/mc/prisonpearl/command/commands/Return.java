@@ -46,10 +46,6 @@ public class Return extends PlayerCommand{
 			p.sendMessage(ChatColor.RED + "That player is not summoned.");
 			return true;
 		}
-		if (pearl.getImprisonedPlayer() == null) {
-			p.sendMessage(ChatColor.RED + "The player is offline, cannot be returned safely.");
-			return true;
-		}
 		if (PrisonPearlPlugin.getCombatTagManager().isCombatTagged(pearl.getImprisonedPlayer())) {
 			p.sendMessage(ChatColor.RED + "The player is combat tagged and cannot be returned.");
 			return true;

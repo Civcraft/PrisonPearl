@@ -44,6 +44,12 @@ public class SummonCommand extends PlayerCommand{
 			p.sendMessage(ChatColor.RED + "That player is already summoned.");
 			return true;
 		}
+		if (pearl.getImprisonedPlayer() != null && pearl.getImprisonedPlayer().isDead()) {
+			// This might happen where an imprisoned player might be dead therefore mercury would not be able to summon them
+			// and no other servers would be able to find the player.
+			p.sendMessage(ChatColor.RED + "The player is still dead cannot be summoned.");
+			return true;
+		}
 		if (!summon.summonPlayer(pearl)) {
 			p.sendMessage(ChatColor.RED + "The player is not online.");
 			return true;

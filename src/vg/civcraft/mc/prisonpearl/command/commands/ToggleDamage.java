@@ -12,6 +12,7 @@ import vg.civcraft.mc.civmodcore.command.PlayerCommand;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 import vg.civcraft.mc.prisonpearl.PrisonPearlPlugin;
 import vg.civcraft.mc.prisonpearl.Summon;
+import vg.civcraft.mc.prisonpearl.managers.MercuryManager;
 import vg.civcraft.mc.prisonpearl.managers.PrisonPearlManager;
 import vg.civcraft.mc.prisonpearl.managers.SummonManager;
 
@@ -78,6 +79,7 @@ public class ToggleDamage extends PlayerCommand{
 		}
 		boolean currentState = summon.getCanDamage();
 		summon.setCanDamage(!currentState);
+		MercuryManager.updateSummonToggleDamage(summon);
 		p.sendMessage(ChatColor.GREEN + "Damaging players was set to "
 				+ String.valueOf(!currentState) + " for "
 				+ pearl.getImprisonedName());

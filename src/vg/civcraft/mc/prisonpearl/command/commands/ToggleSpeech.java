@@ -12,6 +12,7 @@ import vg.civcraft.mc.civmodcore.command.PlayerCommand;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 import vg.civcraft.mc.prisonpearl.PrisonPearlPlugin;
 import vg.civcraft.mc.prisonpearl.Summon;
+import vg.civcraft.mc.prisonpearl.managers.MercuryManager;
 import vg.civcraft.mc.prisonpearl.managers.PrisonPearlManager;
 import vg.civcraft.mc.prisonpearl.managers.SummonManager;
 
@@ -63,12 +64,14 @@ public class ToggleSpeech extends PlayerCommand {
 							+ "Speaking is already set to "
 							+ String.valueOf(toggle) + " for "
 							+ pearl.getImprisonedName());
+					MercuryManager.updateSummonToggleSpeech(summon);
 					return true;
 				}
 				summon.setCanSpeak(toggle);
 				p.sendMessage(ChatColor.GREEN + "Speaking was set to "
 						+ String.valueOf(toggle) + " for "
 						+ pearl.getImprisonedName());
+				MercuryManager.updateSummonToggleSpeech(summon);
 				return true;
 			} else {
 				p.sendMessage(ChatColor.RED
@@ -78,6 +81,7 @@ public class ToggleSpeech extends PlayerCommand {
 		}
 		boolean currentState = summon.getCanSpeak();
 		summon.setCanSpeak(!currentState);
+		MercuryManager.updateSummonToggleSpeech(summon);
 		p.sendMessage(ChatColor.GREEN + "Speaking was set to "
 				+ String.valueOf(!currentState) + " for "
 				+ pearl.getImprisonedName());

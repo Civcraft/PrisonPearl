@@ -20,7 +20,6 @@ public class PrisonPearlCommandHandler extends CommandHandler{
 		addCommands(new SetDamage("SetDamage"));
 		addCommands(new SetDistance("SetDistance"));
 		addCommands(new SetMotd("SetMotd"));
-		addCommands(new Silence("Silence"));
 		addCommands(new SummonCommand("Summon"));
 		addCommands(new ToggleBlocks("ToggleBlocks"));
 		addCommands(new ToggleDamage("ToggleDamage"));

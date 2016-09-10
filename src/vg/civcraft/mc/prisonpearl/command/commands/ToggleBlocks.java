@@ -12,6 +12,7 @@ import vg.civcraft.mc.civmodcore.command.PlayerCommand;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 import vg.civcraft.mc.prisonpearl.PrisonPearlPlugin;
 import vg.civcraft.mc.prisonpearl.Summon;
+import vg.civcraft.mc.prisonpearl.managers.MercuryManager;
 import vg.civcraft.mc.prisonpearl.managers.PrisonPearlManager;
 import vg.civcraft.mc.prisonpearl.managers.SummonManager;
 
@@ -78,6 +79,7 @@ public class ToggleBlocks extends PlayerCommand {
 		}
 		boolean currentState = summon.getCanBreak();
 		summon.setCanBreak(!currentState);
+		MercuryManager.updateSummonToggleBlocks(summon);
 		p.sendMessage(ChatColor.GREEN + "Breaking blocks was set to "
 				+ String.valueOf(!currentState) + " for "
 				+ pearl.getImprisonedName());

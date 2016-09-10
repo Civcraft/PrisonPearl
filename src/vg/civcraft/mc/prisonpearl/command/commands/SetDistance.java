@@ -11,6 +11,7 @@ import vg.civcraft.mc.civmodcore.command.PlayerCommand;
 import vg.civcraft.mc.prisonpearl.PrisonPearl;
 import vg.civcraft.mc.prisonpearl.PrisonPearlPlugin;
 import vg.civcraft.mc.prisonpearl.Summon;
+import vg.civcraft.mc.prisonpearl.managers.MercuryManager;
 import vg.civcraft.mc.prisonpearl.managers.PrisonPearlManager;
 import vg.civcraft.mc.prisonpearl.managers.SummonManager;
 
@@ -55,6 +56,7 @@ public class SetDistance extends PlayerCommand{
 		}
 		Summon s = summon.getSummon(pearl);
 		s.setMaxDistance(distance);
+		MercuryManager.updateSummonDistance(s);
 		p.sendMessage(ChatColor.GREEN + "You have succesfully set the max distance to " + distance + ".");
 		return true;
 	}

@@ -69,12 +69,7 @@ commands:
    ppconfirm:
       description: Confirm reception of pplocate commands from a player
       usage: /ppconfirm [player]
-      permission: prisonpearl.normal.ppconfirm
-
-   ppsilence:
-      description: Silence reception of pplocate commands from player
-      usage: /ppsilence player
-      permission: prisonpearl.normal.ppsilence
+      permission: prisonpearl.normal.ppconfirm=
 
    pploadalts:
       description: reload alt lists from file
