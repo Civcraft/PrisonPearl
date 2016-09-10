@@ -48,7 +48,7 @@ public class Locate extends PlayerCommand{
 			return true;
 		}
 		if (PrisonPearlPlugin.isMercuryEnabled() && (pearl.getLastMoved() + 3000 < System.currentTimeMillis())
-				&& !(pearl.getLocation() instanceof FakeLocation)) { 
+				&& (pearl.getLocation() instanceof FakeLocation)) { 
 			// if its been more than 3 seconds since last update.
 			locate.add(pearl);
 			MercuryManager.requestPPLocate(pearl);
@@ -69,6 +69,6 @@ public class Locate extends PlayerCommand{
 		broad.broadcast(pp.getImprisonedId());
 		Player p = pp.getImprisonedPlayer();
 		if (p != null)
-		p.sendMessage(ChatColor.YELLOW + "Your pearl is " + pp.describeLocation());
+			p.sendMessage(ChatColor.YELLOW + "Your pearl is " + pp.describeLocation());
 	}
 }
