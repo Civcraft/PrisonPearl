@@ -195,35 +195,35 @@ public class MercuryManager {
 	public static void updateSummonDamage(Summon s) {
 		if (!isMercuryEnabled)
 			return;
-		String message = String.format("summon|update|%s|damage|%d", s.getAmountDamage());
+		String message = String.format("summon|update|%s|damage|%d", s.getUUID().toString(), s.getAmountDamage());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 	
 	public static void updateSummonDistance(Summon s) {
 		if (!isMercuryEnabled)
 			return;
-		String message = String.format("summon|update|%s|distance|%d", s.getMaxDistance());
+		String message = String.format("summon|update|%s|distance|%d", s.getUUID().toString(), s.getMaxDistance());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 	
 	public static void updateSummonToggleBlocks(Summon s) {
 		if (!isMercuryEnabled)
 			return;
-		String message = String.format("summon|update|%s|toggle|blocks|%b", s.getCanBreak());
+		String message = String.format("summon|update|%s|toggle|blocks|%b", s.getUUID().toString(), s.getCanBreak());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 	
 	public static void updateSummonToggleDamage(Summon s) {
 		if (!isMercuryEnabled)
 			return;
-		String message = String.format("summon|update|%s|toggle|damage|%b", s.getCanDamage());
+		String message = String.format("summon|update|%s|toggle|damage|%b", s.getUUID().toString(), s.getCanDamage());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 	
 	public static void updateSummonToggleSpeech(Summon s) {
 		if (!isMercuryEnabled)
 			return;
-		String message = String.format("summon|update|%s|toggle|speech|%b", s.getCanSpeak());
+		String message = String.format("summon|update|%s|toggle|speech|%b", s.getUUID().toString(), s.getCanSpeak());
 		MercuryAPI.sendGlobalMessage(message, channel);
 	}
 }

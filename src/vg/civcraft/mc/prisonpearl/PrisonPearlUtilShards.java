@@ -108,16 +108,13 @@ public class PrisonPearlUtilShards {
 		s.setTime(System.currentTimeMillis());
 		if (s.getReturnLocation() instanceof FakeLocation) {
 			// They are.
-			if (pearled == null) {
-				// This happens when the command /ppreturn is used.
-				// The player may not be on this server but can now be returned.
-				// We want to send the request to all servers that the player should now be freed.
+			// Here we check if the pearl originated on this server.
+			if (pearled != null) {
+				// Player is on the same server 
+				PrisonPearlPlugin.getSummonManager().removeSummon(pearl);
 				MercuryManager.returnPPSummon(pearl.getImprisonedId());
-				SummonEvent summonEvent = new SummonEvent(pearl, t);
-				Bukkit.getPluginManager().callEvent(summonEvent);
-				return true;
 			}
-			MercuryManager.returnPPSummon(pearl.getImprisonedId()); // The player needs to be freed on all servers.
+			// Here would be for all other servers.
 			// Let's now check if they are even online.
 			PlayerDetails details = MercuryAPI.getServerforAccount(pearl.getImprisonedId());
 			
@@ -166,6 +163,7 @@ public class PrisonPearlUtilShards {
 			Bukkit.getPluginManager().callEvent(summonEvent);
 			// Player is being returned same server.
 			// Let's check if the player is online.
+			MercuryManager.returnPPSummon(pearl.getImprisonedId());
 			if (pearled == null) {
 				// They are not so lets just remove the summon.
 				PrisonPearlPlugin.getSummonManager().removeSummon(pearl);
